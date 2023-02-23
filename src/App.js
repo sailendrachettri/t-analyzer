@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import './App.css';
+import { useState } from 'react';
 import Alert from './components/Alert';
 import Navbar from './components/Navbar';
+import About from './components/About';
 import TextForm from './components/TextForm';
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 
 function App() {
@@ -37,9 +39,16 @@ function App() {
 
   return (
     <>
-      <Navbar title="Tanalyzer" mode={mode} toggleMode={toggleMode} />
-      <Alert alert={alert} />
-      <TextForm mode={mode} showAlert={showAlert} />
+      <Router>
+        <Navbar title="Tanalyzer" mode={mode} toggleMode={toggleMode} />
+        <Alert alert={alert} />
+
+        <Routes>
+          <Route exact path='/' element={<TextForm mode={mode} showAlert={showAlert} />} />
+          <Route exact path='/about' element={<About />} />
+        </Routes>
+
+      </Router>
     </>
   );
 }
