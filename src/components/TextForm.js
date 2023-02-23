@@ -5,6 +5,15 @@ export default function TextForm(props) {
     // STATE VARIABLES
     const [text, setText] = useState('Type your text / Ctrl + V to paste');
 
+    // VARIABLES AND CALCULATIONS
+    let readingTime;
+    readingTime = (text.split(" ").length - 1) * 0.008;
+    readingTime = readingTime.toFixed(3);
+
+    if (readingTime >= 1)
+        readingTime = Math.ceil((text.split(" ").length - 1) * 0.008)
+
+
     // CSS STYLINGs
     let background_color = (props.mode === 'light' ? 'white' : '#181e24');
     let text_color = (props.mode === 'light' ? '#212529' : 'white');
@@ -65,7 +74,7 @@ export default function TextForm(props) {
                     <p>{text.split(" ").length - 1} words</p>
                     <p>{text.length} characters (including spaces)</p>
                     <p>{text.replace(/ /g, '').length} characters (excluding spaces)</p>
-                    <p>Reading time: {Math.ceil((text.split(" ").length - 1) * 0.008)} min </p>
+                    <p>Reading time: {readingTime} {readingTime >= 1 ? "min" : "sec"} </p>
                 </div>
             </div>
         </>
