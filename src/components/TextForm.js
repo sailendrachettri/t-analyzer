@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 
 export default function TextForm(props) {
     // STATE VARIABLES
-    const [text, setText] = useState('Type your text / Ctrl + V to paste');
+    const [text, setText] = useState('');
 
     // VARIABLES AND CALCULATIONS
     let readingTime;
     readingTime = (text.split(" ").length - 1) * 0.008;
-    readingTime = readingTime.toFixed(3);
+    readingTime = readingTime.toFixed(2);
 
     if (readingTime >= 1)
         readingTime = Math.ceil((text.split(" ").length - 1) * 0.008)
@@ -54,8 +54,6 @@ export default function TextForm(props) {
         props.showAlert("Extra spaces are removed!", "info");
     }
 
-
-
     return (
         <>
             <div className="container mb-3" style={{ color: (props.mode === 'dark') ? 'white' : 'black' }}>
@@ -64,7 +62,7 @@ export default function TextForm(props) {
 
                     <div className="mb-2">
                         <label htmlFor="myBox" className="form-label text-secondary">Enter your text below to analyze</label>
-                        <textarea className={`form-control`} id="myBox" rows="8" value={text} onChange={methodOnChange} onFocus={clearTextAreaBox} style={{ backgroundColor: background_color, color: text_color }}></textarea>
+                        <textarea className={`form-control`} id="myBox" rows="8" value={text} placeholder="Ctrl+V to paste or start typing..." onChange={methodOnChange} onFocus={clearTextAreaBox} style={{ backgroundColor: background_color, color: text_color }}></textarea>
                     </div>
 
                     <button className="btn btn-outline-primary mx-1" onClick={convertTextToUpperCase}>Uppercase</button>
@@ -72,14 +70,15 @@ export default function TextForm(props) {
                     <button className="btn btn-outline-danger mx-1" onClick={clearText}>Clear</button>
                     <button className="btn btn-outline-primary" onClick={copyText}>Copy Text</button>
                     <button className="btn btn-outline-primary mx-1" onClick={removeExtraSpaces}>Remove Extra Spaces </button>
+                    {/* <button className="btn btn-outline-primary" onClick={pastePrevText}>Paste </button> */}
                 </div>
 
                 <div className="container mt-4">
                     <h4>Summary</h4>
-                    <p>{text.split(" ").length - 1} words</p>
+                    <p>{text.split(" ").filter((element) => { return element.length !== 0 }).length} words</p>
+                    <p>{readingTime} {readingTime >= 1 ? "minutes to read" : "seconds to read"} </p>
                     <p>{text.length} characters (including spaces)</p>
                     <p>{text.replace(/ /g, '').length} characters (excluding spaces)</p>
-                    <p>Reading time: {readingTime} {readingTime >= 1 ? "min" : "sec"} </p>
                 </div>
 
                 <h3>Preview</h3>
