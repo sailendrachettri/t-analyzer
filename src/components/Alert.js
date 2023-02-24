@@ -8,11 +8,13 @@ function Alert(props) {
     }
 
     return (
-        props.alert && /* this and operator with below html text comparison */
-        <div className="container mt-3">
-            <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
-                <strong>{firstAlphabetCaptialize(props.alert.type)}! </strong> : {props.alert.msg}
-            </div>
+        <div style={{ height: '55px' }}>
+            {props.alert && /* this and operator with below html text comparison */
+                <div className="container">
+                    <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+                        <strong>{firstAlphabetCaptialize(props.alert.type)}! </strong> : {props.alert.msg}
+                    </div>
+                </div>}
         </div>
     )
 }

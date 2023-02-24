@@ -27,7 +27,7 @@ export default function TextForm(props) {
     const clearText = () => {
         let txt = "";
         setText(txt);
-        props.showAlert("Text area is empty!", "info");
+        props.showAlert("Text area is empty!", "warning");
     }
     const convertTextToLowerCase = () => {
         let txt = text.toLocaleLowerCase();
@@ -42,6 +42,7 @@ export default function TextForm(props) {
         txt.select();
         navigator.clipboard.writeText(text);
         setText(text);
+        // document.getSelection().removeAllRanges();
         props.showAlert("Text copied to clipboard!", "info");
     }
     const clearTextAreaBox = () => {
@@ -57,32 +58,32 @@ export default function TextForm(props) {
     return (
         <>
             <div className="container mb-3" style={{ color: (props.mode === 'dark') ? 'white' : 'black' }}>
-                <div className="container mt-4">
-                    <h3> Text Analyzer</h3>
+                <div className="container">
+                    <h3> Text Analyzer - Remove extra spaces, convert to uppercase, lower case</h3>
 
                     <div className="mb-2">
                         <label htmlFor="myBox" className="form-label text-secondary">Enter your text below to analyze</label>
                         <textarea className={`form-control`} id="myBox" rows="8" value={text} placeholder="Ctrl+V to paste or start typing..." onChange={methodOnChange} onFocus={clearTextAreaBox} style={{ backgroundColor: background_color, color: text_color }}></textarea>
                     </div>
 
-                    <button className="btn btn-outline-primary mx-1" onClick={convertTextToUpperCase}>Uppercase</button>
-                    <button className="btn btn-outline-primary" onClick={convertTextToLowerCase}>Lowercase</button>
-                    <button className="btn btn-outline-danger mx-1" onClick={clearText}>Clear</button>
-                    <button className="btn btn-outline-primary" onClick={copyText}>Copy Text</button>
-                    <button className="btn btn-outline-primary mx-1" onClick={removeExtraSpaces}>Remove Extra Spaces </button>
+                    <button disabled={text.length === 0} className="btn btn-outline-primary mx-1 my-1" onClick={convertTextToUpperCase}>Uppercase</button>
+                    <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={convertTextToLowerCase}>Lowercase</button>
+                    <button disabled={text.length === 0} className="btn btn-outline-warning mx-1 my-1" onClick={clearText}>Clear</button>
+                    <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={copyText}>Copy Text</button>
+                    <button disabled={text.length === 0} className="btn btn-outline-primary mx-1 my-1" onClick={removeExtraSpaces}>Remove Extra Spaces </button>
                     {/* <button className="btn btn-outline-primary" onClick={pastePrevText}>Paste </button> */}
                 </div>
 
                 <div className="container mt-4">
                     <h4>Summary</h4>
-                    <p>{text.split(" ").filter((element) => { return element.length !== 0 }).length} words</p>
+                    <p>{text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words</p>
                     <p>{readingTime} {readingTime >= 1 ? "minutes to read" : "seconds to read"} </p>
                     <p>{text.length} characters (including spaces)</p>
                     <p>{text.replace(/ /g, '').length} characters (excluding spaces)</p>
                 </div>
 
                 <h3>Preview</h3>
-                {(text.length <= 0) ? "Enter something in textarea to preview" : text}
+                {(text.length <= 0) ? "Nothing to preview :(" : text}
             </div>
         </>
     )
