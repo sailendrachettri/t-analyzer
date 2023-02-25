@@ -36,7 +36,7 @@ export default function TextForm(props) {
     }
     const extractEmail = () => {
         let email = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
-        setText(email.join('\n'));
+        email !== null ? setText(email.join('\n')) : setText("No email found :("); // if there is no email in text then show custom msg
 
     }
     const methodOnChange = (event) => {
@@ -64,19 +64,19 @@ export default function TextForm(props) {
         <>
             <div className="container mb-3" style={{ color: (props.mode === 'dark') ? 'white' : 'black' }}>
                 <div className="container">
-                    <h3> Text Analyzer - Remove extra spaces, convert to uppercase, lower case</h3>
+                    <h3> Text Analyzer - Extract emails, convert to upper-lower cases, removed extra spaces</h3>
 
                     <div className="mb-2">
                         <label htmlFor="myBox" className="form-label text-secondary">Enter your text below to analyze</label>
                         <textarea className={`form-control`} id="myBox" rows="8" value={text} placeholder="Ctrl+V to paste or start typing..." onChange={methodOnChange} onFocus={clearTextAreaBox} style={{ backgroundColor: background_color, color: text_color }}></textarea>
                     </div>
 
+                    <button disabled={text.length === 0} className="btn btn-primary" onClick={extractEmail}>Extract Email </button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary mx-1 my-1" onClick={convertTextToUpperCase}>Uppercase</button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={convertTextToLowerCase}>Lowercase</button>
                     <button disabled={text.length === 0} className="btn btn-outline-warning mx-1 my-1" onClick={clearText}>Clear</button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={copyText}>Copy Text</button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary mx-1 my-1" onClick={removeExtraSpaces}>Remove Extra Spaces </button>
-                    <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={extractEmail}>Extract Email </button>
                     {/* <button className="btn btn-outline-primary" onClick={pastePrevText}>Paste </button> */}
                 </div>
 
