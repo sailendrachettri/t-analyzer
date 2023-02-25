@@ -34,6 +34,11 @@ export default function TextForm(props) {
         setText(txt);
         props.showAlert("Text converted to lowercase!", "success");
     }
+    const extractEmail = () => {
+        let email = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+        setText(email.join('\n'));
+
+    }
     const methodOnChange = (event) => {
         setText(event.target.value);
     }
@@ -71,6 +76,7 @@ export default function TextForm(props) {
                     <button disabled={text.length === 0} className="btn btn-outline-warning mx-1 my-1" onClick={clearText}>Clear</button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={copyText}>Copy Text</button>
                     <button disabled={text.length === 0} className="btn btn-outline-primary mx-1 my-1" onClick={removeExtraSpaces}>Remove Extra Spaces </button>
+                    <button disabled={text.length === 0} className="btn btn-outline-primary" onClick={extractEmail}>Extract Email </button>
                     {/* <button className="btn btn-outline-primary" onClick={pastePrevText}>Paste </button> */}
                 </div>
 
